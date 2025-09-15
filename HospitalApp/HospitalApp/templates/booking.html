@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Randevu Oluştur</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Randevu Tarihi</label>
+                                    <input type="date" name="appoint_date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Randevu Saati</label>
+                                    <input type="time" name="appoint_time" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Randevu Tipi</label>
+                            <select name="appointment_type" class="form-control" required>
+                                <option value="checkup">Muayene</option>
+                                <option value="report">Rapor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mesaj</label>
+                            <textarea name="message" class="form-control" rows="3"
+                                      placeholder="Ek bilgi veya notlar..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-calendar-check"></i> Randevu Oluştur
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

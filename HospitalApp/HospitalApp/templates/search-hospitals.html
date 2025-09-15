@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0" name="viewport"/>
+    <title>HastaneApp</title>
+    <link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" type="image/x-icon"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap-datetimepicker.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/select2/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/style.css' %}" rel="stylesheet"/>
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg header-nav">
+                <div class="navbar-header">
+                    <a href="javascript:void(0);" id="mobile_btn"><span class="bar-icon"></span></a>
+                    <a class="navbar-brand logo" href="{% url 'hospital_home' %}">
+                        <img alt="Logo" class="img-fluid" src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"/>
+                    </a>
+                </div>
+                <div class="main-menu-wrapper">
+                    <div class="menu-header">
+                        <a class="menu-logo" href="{% url 'hospital_home' %}">
+                            <img alt="Logo" class="img-fluid" src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}"/>
+                        </a>
+                        <a class="menu-close" href="javascript:void(0);" id="menu_close">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    <ul class="main-nav">
+                        <li><a href="{% url 'hospital_home' %}">Home</a></li>
+                        <li class="has-submenu active">
+                            <a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'doctor-dashboard' %}">Doctor Dashboard</a></li>
+                                <li><a href="{% url 'appointments' %}">Appointments</a></li>
+                                <li><a href="{% url 'schedule-timings' %}">Schedule Timing</a></li>
+                                <li><a href="{% url 'my-patients' %}">Patients List</a></li>
+                                <li><a href="{% url 'doctor-profile-settings' %}">Profile Settings</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Patients <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="{% url 'search' %}">Search Doctor</a></li>
+                                <li><a href="{% url 'doctor-profile' %}">Doctor Profile</a></li>
+                                <li><a href="{% url 'booking' %}">Booking</a></li>
+                                <li><a href="{% url 'booking-success' %}">Booking Success</a></li>
+                                <li><a href="{% url 'patient-dashboard' %}">Patient Dashboard</a></li>
+                                <li><a href="{% url 'patient-profile-settings' %}">Profile Settings</a></li>
+                                <li><a href="{% url 'change-password' %}">Change Password</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'about-us' %}">About Us</a></li>
+                        <li><a href="{% url 'admin_login' %}" target="_blank">Admin</a></li>
+                        <li class="login-link"><a href="{% url 'login' %}">Login / Signup</a></li>
+                    </ul>
+                </div>
+                <ul class="nav header-navbar-rht">
+                    <li class="nav-item contact-item">
+                        <div class="header-contact-img">
+                            <i class="far fa-hospital"></i>
+                        </div>
+                        <div class="header-contact-detail">
+                            <p class="contact-header">Contact</p>
+                            <p class="contact-info-header">+91 1795087285</p>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown has-arrow logged-item">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">
+                            <span class="user-img">
+                                <img alt="Richard Wilson" class="rounded-circle" src="{% static 'HealthStack-System/images/Normal/patients/patient.jpg' %}" width="31"/>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="user-header">
+                                <div class="avatar avatar-sm">
+                                    <img alt="User Image" class="avatar-img rounded-circle" src="{% static 'HealthStack-System/images/Normal/patients/patient.jpg' %}"/>
+                                </div>
+                                <div class="user-text">
+                                    <h6>Richard Wilson</h6>
+                                    <p class="text-muted mb-0">Patient</p>
+                                </div>
+                            </div>
+                            <a class="dropdown-item" href="{% url 'patient-dashboard' %}">Dashboard</a>
+                            <a class="dropdown-item" href="{% url 'patient-profile-settings' %}">Profile Settings</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="breadcrumb-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-8 col-12">
+                        <nav aria-label="breadcrumb" class="page-breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'hospital_home' %}">Home</a></li>
+                                <li aria-current="page" class="breadcrumb-item active">Search Doctor</li>
+                            </ol>
+                        </nav>
+                        <h2 class="breadcrumb-title">Search Doctor</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
+                        <div class="card search-filter">
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Search Filter</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="filter-widget">
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" placeholder="Select Date" type="text"/>
+                                    </div>
+                                </div>
+                                <div class="filter-widget">
+                                    <h4>Gender</h4>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input checked="" name="gender_type" type="checkbox"/>
+                                            <span class="checkmark"></span> Male Doctor
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input name="gender_type" type="checkbox"/>
+                                            <span class="checkmark"></span> Female Doctor
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="filter-widget">
+                                    <h4>Select Specialist</h4>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input checked="" name="select_specialist" type="checkbox"/>
+                                            <span class="checkmark"></span> Urology
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input checked="" name="select_specialist" type="checkbox"/>
+                                            <span class="checkmark"></span> Neurology
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input name="select_specialist" type="checkbox"/>
+                                            <span class="checkmark"></span> Dentist
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input name="select_specialist" type="checkbox"/>
+                                            <span class="checkmark"></span> Orthopedic
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="custom_check">
+                                            <input name="select_specialist" type="checkbox"/>
+                                            <span class="checkmark"></span> Cardiologist
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="btn-search">
+                                    <button class="btn btn-block" type="button">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li class="active">
+                                    <a href="{% url 'patient-dashboard' %}">
+                                        <i class="fas fa-columns"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'search' %}">
+                                        <i class="fas fa-user-md"></i>
+                                        <span>Search Doctor</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'patient-profile-settings' %}">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>Profile Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'change-password' %}">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Change Password</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'logout' %}">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            </nav>
+                    </div>
+                    <div class="col-md-12 col-lg-8 col-xl-9">
+                        <div class="load-more text-center">
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+
+    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/moment.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+</body>
+</html>

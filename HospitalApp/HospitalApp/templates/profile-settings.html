@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0" name="viewport"/>
+    <title>HastaneApp</title>
+    <link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" type="image/x-icon"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap-datetimepicker.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/select2/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/style.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-wrapper">
+    <header class="header">
+        {% include 'patient_navbar.html' %}
+    </header>
+    <div class="breadcrumb-bar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-12">
+                    <nav aria-label="breadcrumb" class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Profile Settings</li>
+                        </ol>
+                    </nav>
+                    <h2 class="breadcrumb-title">Profile Settings</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                    <div>{% include 'patient-sidebar.html' %}</div>
+                </div>
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{% url 'profile-settings' %}" enctype="multipart/form-data" method="POST">
+                                {% csrf_token %}
+                                <div class="row form-row">
+                                    <div class="col-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="change-avatar">
+                                                <div class="profile-img">
+                                                    <img alt="User Image" src="{{patient.featured_image.url}}"/>
+                                                </div>
+                                                <div class="upload-img">
+                                                    <div class="change-photo-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                        <input class="upload" name="featured_image" type="file"/>
+                                                    </div>
+                                                    <small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Username <span class="text-danger">*</span></label>
+                                            <input class="form-control" readonly type="text" value="{{patient.username}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Email <span class="text-danger">*</span></label>
+                                            <input class="form-control" readonly type="text" value="{{patient.email}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input class="form-control" name="name" type="text" value="{{ patient.name }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Date of Birth</label>
+                                            <input class="form-control datetimepicker" name="dob" type="text" value="{{patient.dob}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Blood Group</label>
+                                            <select class="form-control select" name="blood_group">
+                                                <option value="{{patient.blood_group}}">{{patient.blood_group}}</option>
+                                                <option value="A-">A-</option>
+                                                <option value="A+">A+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="O-">O-</option>
+                                                <option value="O+">O+</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Mobile</label>
+                                            <input class="form-control" name="phone_number" type="text" value="{{patient.phone_number}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input class="form-control" name="address" type="text" value="{{patient.address}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>Age</label>
+                                            <input class="form-control" name="age" type="text" value="{{patient.age}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>NID</label>
+                                            <input class="form-control" name="nid" type="text" value="{{patient.nid}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>History</label>
+                                            <input class="form-control" name="history" type="text" value="{{patient.history}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn" type="submit">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</div>
+
+<script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/plugins/Normal/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/moment.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
+<script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
+<script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+</body>
+</html>

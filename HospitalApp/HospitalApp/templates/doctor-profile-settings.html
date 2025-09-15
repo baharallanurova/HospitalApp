@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>HastaneApp</title>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0" name="viewport"/>
+    <link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" type="image/x-icon"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/select2/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/bootstrap-tagsinput/css/bootstrap-tagsinput.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/dropzone/dropzone.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/fancybox/jquery.fancybox.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/style.css' %}" rel="stylesheet"/>
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="header">
+            {% include 'doctor-navbar.html' %}
+        </header>
+        <div class="breadcrumb-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-12 col-12">
+                        <nav aria-label="breadcrumb" class="page-breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'doctor-dashboard' %}">Home</a></li>
+                                <li aria-current="page" class="breadcrumb-item active">Profile Settings</li>
+                            </ol>
+                        </nav>
+                        <h2 class="breadcrumb-title">Profile Settings</h2>
+                        {% include 'message.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                        <div>{% include 'doctor-sidebar.html' %}</div>
+                    </div>
+                    <div class="col-md-7 col-lg-8 col-xl-9">
+                        <form action="{% url 'doctor-profile-settings' %}" enctype="multipart/form-data" method="POST">
+                            {% csrf_token %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Basic Information</h4>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="change-avatar">
+                                                    <div class="profile-img">
+                                                        <img alt="User Image" src="{{doctor.featured_image.url}}"/>
+                                                    </div>
+                                                    <div class="upload-img">
+                                                        <div class="change-photo-btn">
+                                                            <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                            <input class="upload" name="featured_image" type="file"/>
+                                                        </div>
+                                                        <small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Username <span class="text-danger">*</span></label>
+                                                <input class="form-control" readonly type="text" value="{{doctor.username}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Email <span class="text-danger">*</span></label>
+                                                <input class="form-control" readonly type="email" value="{{doctor.email}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" name="name" type="text" value="{{doctor.name}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone Number <span class="text-danger">*</span></label>
+                                                <input class="form-control" name="number" placeholder="Phone Number" type="tel" value="{{doctor.phone_number}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Gender<span class="text-danger">*</span></label>
+                                                <select class="form-control select" name="gender">
+                                                    {% if doctor.gender == 'male' %}
+                                                    <option value="male" selected>Male</option>
+                                                    <option value="female">Female</option>
+                                                    {% elif doctor.gender == 'female' %}
+                                                    <option value="female" selected>Female</option>
+                                                    <option value="male">Male</option>
+                                                    {% else %}
+                                                    <option>Select</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-0">
+                                                <label>Date of Birth<span class="text-danger">*</span></label>
+                                                <input class="form-control" name="dob" type="date" value="{{doctor.dob}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>NID <span class="text-danger">*</span></label>
+                                                <input class="form-control" name="nid" placeholder="NID" type="text" value="{{doctor.nid}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Visiting Hour <span class="text-danger">*</span></label>
+                                                <input class="form-control" name="visit_hour" placeholder="x am - x pm" type="text" value="{{doctor.visiting_hour}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">About Me</h4>
+                                    <div class="form-group mb-0">
+                                        <label>Biography</label>
+                                        <textarea class="form-control" name="description" rows="5">{{doctor.description}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card contact-card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Pricing</h4>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Consultation Fee</label>
+                                                <input class="form-control" name="consultation_fee" type="text" value="{{doctor.consultation_fee}}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Report Fee</label>
+                                                <input class="form-control" name="report_fee" type="text" value="{{doctor.report_fee}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Education</h4>
+                                    <div class="education-info">
+                                        <div class="row form-row education-cont">
+                                            {% for education in educations %}
+                                            <div class="col-12 col-md-10 col-lg-11">
+                                                <div class="row form-row">
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>Degree</label>
+                                                            <input class="form-control" type="text" value="{{education.degree}}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>Institute</label>
+                                                            <input class="form-control" type="text" value="{{education.institute}}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>Year of Completion</label>
+                                                            <input class="form-control" type="text" value="{{education.year_of_completion}}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-2 col-lg-1">
+                                                <label class="d-md-block d-sm-none d-none"></label>
+                                                <a class="btn btn-danger" href="{% url 'delete-education' pk=education.education_id %}" onclick="return confirm('Are you sure you want to Delete?');">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="add-more">
+                                        <a class="add-education" href="javascript:void(0);">
+                                            <i class="fa fa-plus-circle"></i> Add Education
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Experience</h4>
+                                    <div class="experience-info">
+                                        <div class="row form-row experience-cont">
+                                            {% for e in experiences %}
+                                            <div class="col-12 col-md-10 col-lg-11">
+                                                <div class="row form-row">
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Hospital Name</label>
+                                                            <input class="form-control" type="text" value="{{e.work_place_name}}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>From</label>
+                                                            <input class="form-control" type="text" value="{{e.from_year}}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>To</label>
+                                                            <input class="form-control" type="text" value="{{e.to_year}}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Designation</label>
+                                                            <input class="form-control" type="text" value="{{e.designation}}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-2 col-lg-1">
+                                                <label class="d-md-block d-sm-none d-none"></label>
+                                                <a class="btn btn-danger" href="{% url 'delete-experience' pk=e.experience_id %}" onclick="return confirm('Are you sure you want to Delete?');">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="add-more">
+                                        <a class="add-experience" href="javascript:void(0);">
+                                            <i class="fa fa-plus-circle"></i> Add Experience
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section submit-btn-bottom">
+                                <button class="btn btn-primary submit-btn" type="submit">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+
+    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/ResizeSensor.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/theia-sticky-sidebar/theia-sticky-sidebar.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/dropzone/dropzone.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/plugins/Normal/bootstrap-tagsinput/js/bootstrap-tagsinput.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/doctor-profile-settings.js' %}"></script>
+    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/sidebar.js' %}"></script>
+
+    {% if messages %}
+    <script>
+        // {% for message in messages %}
+        $(document).ready(function () {
+            $('.toast').toast('show');
+        });
+        // {% endfor %}
+    </script>
+    {% endif %}
+</body>
+</html>

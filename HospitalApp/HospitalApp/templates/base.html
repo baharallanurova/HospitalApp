@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HastaneApp - Sağlık Sistemi</title>
+    <link rel="icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}">
+    <style>
+        .system-card {
+            transition: transform 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .system-card:hover {
+            transform: translateY(-5px);
+        }
+        .system-icon {
+            font-size: 3rem;
+            color: #2c7be5;
+            margin-bottom: 15px;
+        }
+        .feature-img {
+            border-radius: 10px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .chat-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .prescription-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="main-wrapper">
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'hospital:hospital_home' %}">
+                    <img src="{% static 'HealthStack-System/images/Normal/logo.jpg' %}" alt="HastaneApp" height="40">
+                    <span class="ml-2 font-weight-bold text-primary">HastaneApp</span>
+                </a>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'hospital:hospital_home' %}">Ana Sayfa</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'hospital:about-us' %}">Hakkımızda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'hospital:search' %}">Doktor Bul</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                <img src="{% static 'HealthStack-System/images/Normal/patients/patient.jpg' %}"
+                                     class="rounded-circle" width="30" height="30">
+                                {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'patient-dashboard' %}">Profil</a>
+                                <a class="dropdown-item" href="{% url 'profile-settings' %}">Ayarlar</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Çıkış</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="btn btn-primary ml-2" href="{% url 'doctor:login' %}">Giriş Yap</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content">
+        <div class="container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>HastaneApp</h5>
+                    <p>Sağlık hizmetleriniz için güvenilir çözüm ortağınız.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Hızlı Erişim</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'hospital:hospital_home' %}" class="text-white">Ana Sayfa</a></li>
+                        <li><a href="{% url 'hospital:about-us' %}" class="text-white">Hakkımızda</a></li>
+                        <li><a href="{% url 'hospital:search' %}" class="text-white">Doktorlar</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>İletişim</h5>
+                    <p><i class="fas fa-phone"></i> +90 123 456 7890</p>
+                    <p><i class="fas fa-envelope"></i> info@hastaneapp.com</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 HastaneApp. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+<script src="{% static 'HealthStack-System/js/Normal/script.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+    $('form').on('submit', function(e) {
+        const requiredFields = $(this).find('input[required], select[required], textarea[required]');
+        let valid = true;
+
+        requiredFields.each(function() {
+            if (!$(this).val().trim()) {
+                valid = false;
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        if (!valid) {
+            e.preventDefault();
+            alert('Lütfen tüm gerekli alanları doldurun.');
+        }
+    });
+
+    {% if messages %}
+    {% for message in messages %}
+    showToast('{{ message.tags }}', '{{ message }}');
+    {% endfor %}
+    {% endif %}
+});
+
+function showToast(type, message) {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
+}
+
+function initializeChat() {
+    $('.chat-box').animate({ scrollTop: $('.chat-box')[0].scrollHeight }, 1000);
+
+    $('#chat-form').on('submit', function(e) {
+        e.preventDefault();
+        const message = $(this).find('textarea').val().trim();
+        if (message) {
+            $(this).find('textarea').val('');
+        }
+    });
+}
+
+function confirmAction(action, message) {
+    return confirm(`${action} işlemini gerçekleştirmek istediğinize emin misiniz? ${message}`);
+}
+</script>
+</body>
+</html>

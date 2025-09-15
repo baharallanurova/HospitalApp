@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0" name="viewport"/>
+    <title>HastaneApp - Prescription</title>
+    <link href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" type="image/x-icon"/>
+    <link href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'HealthStack-System/css/Normal/style.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-wrapper">
+    <header class="header">
+        {% include 'patient_navbar.html' %}
+    </header>
+
+    <div class="breadcrumb-bar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-12">
+                    <nav aria-label="breadcrumb" class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'patient-dashboard' %}">Home</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Prescription View</li>
+                        </ol>
+                    </nav>
+                    <h2 class="breadcrumb-title">Prescription View</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                    <div>{% include 'patient-sidebar.html' %}</div>
+                </div>
+
+                <div class="col-md-7 col-lg-8 col-xl-9">
+                    <div class="invoice-content">
+                        {% for prescription in prescription %}
+                        <div class="invoice-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="invoice-logo">
+                                        <img alt="logo" src="{% static 'HealthStack-System/images/Normal/logo1.png' %}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="invoice-details">
+                                        <strong>Prescription ID:</strong> {{prescription.prescription_id}} <br/>
+                                        <strong>Patient ID:</strong> {{prescription.patient.patient_id}} <br/>
+                                        <strong>Date:</strong> {{prescription.create_date}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="invoice-info">
+                                        <strong class="customer-text">Doctor Information</strong>
+                                        <p class="invoice-details invoice-details-two">
+                                            <b>Name: </b>{{prescription.doctor.name}} <br/>
+                                            <b>Department: </b>{{prescription.doctor.department_name}}<br/>
+                                            <b>Email: </b>{{prescription.doctor.email}} <br/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="invoice-info invoice-info2">
+                                        <strong class="customer-text">Prescription To</strong>
+                                        <p class="invoice-details">
+                                            <b>Name: </b>{{prescription.patient.name}}<br/>
+                                            <b>Address: </b>{{prescription.patient.address}}<br/>
+                                            <b>Email: </b>{{prescription.patient.email}}<br/>
+                                            <b>Phone Number: </b>{{prescription.patient.phone_number}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item invoice-table-wrap mt-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr/>
+                                    <h2 class="text-center mb-4" style="color: #5493c7"><b>Medicine</b></h2>
+                                    <hr/>
+                                    <div class="table-responsive">
+                                        <table class="invoice-table table table-bordered">
+                                            <thead>
+                                                <tr style="background-color: #5493c7; color: white;">
+                                                    <th class="text-center">Medicine Name</th>
+                                                    <th class="text-center">Quantity</th>
+                                                    <th class="text-center">Frequency</th>
+                                                    <th class="text-center">Duration</th>
+                                                    <th class="text-center">Relation with meal</th>
+                                                    <th class="text-center">Instruction</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for pm in prescription_medicine %}
+                                                <tr>
+                                                    <td class="text-center">{{pm.medicine_name}}</td>
+                                                    <td class="text-center">{{pm.quantity}}</td>
+                                                    <td class="text-center">{{pm.frequency}}</td>
+                                                    <td class="text-center">{{pm.duration}}</td>
+                                                    <td class="text-center">{{pm.relation_with_meal}}</td>
+                                                    <td class="text-center">{{pm.instruction}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item invoice-table-wrap mt-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr/>
+                                    <h2 class="text-center mb-4" style="color: #5493c7"><b>Test</b></h2>
+                                    <hr/>
+                                    <div class="table-responsive">
+                                        <table class="invoice-table table table-bordered">
+                                            <thead>
+                                                <tr style="background-color: #5493c7; color: white;">
+                                                    <th class="text-center">Test Name</th>
+                                                    <th class="text-center">Description</th>
+                                                    <th class="text-center">Test Id</th>
+                                                    <th class="text-center">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for pt in prescription_test %}
+                                                <tr>
+                                                    <td class="text-center">{{pt.test_name}}</td>
+                                                    <td class="text-center">{{pt.test_description}}</td>
+                                                    <td class="text-center">{{pt.test_info_id}}</td>
+                                                    <td class="text-center">{{pt.test_info_price}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="invoice-item invoice-table-wrap mt-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="invoice-table table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <h2 class="text-center mb-4" style="color: #5493c7">
+                                                            <b>Advice/Recommendation</b>
+                                                        </h2>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{prescription.extra_information}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <a href="{% url 'test-cart' pk=prescription.prescription_id %}" class="btn btn-primary btn-md">
+                            Test Cart
+                        </a>
+                        <br/><br/>
+                        <a href="{% url 'pres_pdf' pk=prescription.prescription_id %}" target="_blank" class="btn btn-info btn-md">
+                            Download Prescription
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+</div>
+</body>
+</html>

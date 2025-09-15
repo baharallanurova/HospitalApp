@@ -1,0 +1,22 @@
+{% load static %}
+
+{% for message in messages %}
+<div aria-atomic="true" aria-live="assertive" class="toast notification bg-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %}" data-delay="5000" role="alert">
+  {% comment %} 
+  <div class="toast-header"><strong class="mr-auto">
+      {% if message.tags == 'error' %}
+      <i class="fas fa-times mr-2"></i>
+      {% elif message.tags == 'warning' %}
+      <i class="fas fa-exclamation mr-2"></i>
+      {% elif message.tags == 'info' %}
+      <i class="fas fa-info mr-2"></i>
+      {% elif message.tags == 'success' %}
+      <i class="fas fa-check mr-2"></i>
+      {% endif %}
+      {{message.tags|capfirst}}
+    </strong><button aria-label="Close" class="ml-2 mb-1 close" data-dismiss="toast" type="button"><span aria-hidden="true">×</span></button></div> 
+  {% endcomment %}
+  <div class="toast-body">
+    {{message|safe}}
+  </div></div>
+{% endfor %}
